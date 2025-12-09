@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexcan XXXXX</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0a0a0f;color:#fff;font-family:'Segoe UI',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative;animation:glow 2s ease-in-out infinite alternate}
+        @keyframes glow {0% {box-shadow:0 0 20px #00ff9d;} 100% {box-shadow:0 0 40px #00d4ff;}}
+        .topbar{background:#1a1a2e;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;box-shadow:0 4px 20px rgba(0,255,157,0.5);border-bottom:2px solid #00ff9d}
+        .logo{font-size:28px;font-weight:bold;background:linear-gradient(90deg,#00ff9d,#00d4ff);-webkit-background-clip:text;color:transparent}
+        .gx-corner{font-size:13px;color:#00ff9d;text-shadow:0 0 10px #00ff9d}
+        .search{max-width:700px;margin:100px auto 0;position:relative}
+        #query{width:100%;padding:22px 80px 22px 30px;font-size:23px;background:#1e1e2e;border:none;border-radius:50px;outline:none;color:#fff;box-shadow:0 15px 40px rgba(0,255,157,0.4)}
+        #send{position:absolute;right:12px;top:12px;background:#00ff9d;color:#000;border:none;width:56px;height:56px;border-radius:50%;font-size:32px;cursor:pointer}
+        #response{margin:40px auto;max-width:750px;padding:25px;background:#1e1e2e;border-radius:20px;display:none;box-shadow:0 10px 30px rgba(0,255,157,0.3);border:1px solid #00ff9d}
+        .sidebar-btn{position:fixed;right:0;top:50%;transform:translateY(-50%);background:#00ff9d;color:#000;padding:18px 10px;border-radius:12px 0 0 12px;font-size:32px;cursor:pointer;z-index:9999}
+        .sidebar{position:fixed;right:-460px;top:0;width:460px;height:100%;background:#1a1a2e;transition:0.4s;z-index:9998;padding:20px;box-shadow:-10px 0 30px rgba(0,255,157,0.4)}
+        .sidebar.open{right:0}
+        iframe{width:100%;height:calc(33% - 20px);border:none;border-radius:12px;margin-bottom:20px;background:#000}
+        .gx-control{position:fixed;bottom:20px;right:20px;background:#1a1a2e;padding:15px;border-radius:15px;box-shadow:0 5px 20px rgba(0,255,157,0.3);border:1px solid #00ff9d}
+        .gx-control button{background:#00ff9d;color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer;margin:5px}
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="logo">Flexcan XXXXX</div>
+        <div class="gx-corner" id="gx-info">CPU %18 • RAM %34 • GX MODE ON</div>
+    </div>
+
+    <div class="search">
+        <input type="text" id="query" placeholder="Websayd'a sor, her şeyi bilir..." autocomplete="off">
+        <button id="send">→</button>
+    </div>
+
+    <div id="response"></div>
+
+    <div class="sidebar-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">◄</div>
+    <div class="sidebar" id="sidebar">
+        <h2 style="color:#00ff9d;margin-bottom:15px">Flexcan Sidebar</h2>
+        <iframe src="https://youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        <iframe src="https://discord.com/login" allowfullscreen></iframe>
+        <iframe src="https://twitch.tv" allowfullscreen></iframe>
+    </div>
+
+    <div class="gx-control">
+        <h4 style="color:#00ff9d;margin-bottom:10px">GX Control</h4>
+        <button onclick="limitRAM()">RAM Limit</button>
+        <button onclick="playSound()">GX Sound</button>
+    </div>
+
+    <script>
+        const q = document.getElementById('query');
+        const b = document.getElementById('send');
+        const r = document.getElementById('response');
+        const info = document.getElementById('gx-info');
+
+        function updateGX() {
+            const cpu = Math.floor(Math.random() * 20) + 10;
+            const ram = Math.floor(Math.random() * 30) + 20;
+            info.innerHTML = `CPU %${cpu} • RAM %${ram} • GX MODE ON`;
+        }
+        setInterval(updateGX, 5000);
+
+        function sor() {
+            let s = q.value.trim();
+            if (!s) return;
+            r.style.display = 'block';
+            r.innerHTML = `<strong>Soru:</strong> ${s}<br><br><strong style="color:#00ff9d">Websayd:</strong> Düşünüyorum kral...`;
+            setTimeout(() => {
+                r.innerHTML = `<strong>Soru:</strong> ${s}<br><br><strong style="color:#00ff9d">Websayd:</strong> Selam kanka! Ben Websayd, Flexcan XXXXX'in özel yapay zekâsıyım. Opera GX'ten daha havalıyım! Yan panelde YouTube, Discord, Twitch var, reklamsız takıl. GX Control ile RAM limit, ses efekti falan var 😈`;
+            }, 1500);
+            q.value = '';
+        }
+        b.onclick = sor;
+        q.addEventListener('keyup', e => e.key === 'Enter' && sor());
+
+        function limitRAM() {
+            alert('RAM limiti aktif! %50'ye indirildi.');
+        }
+        function playSound() {
+            const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+Dy9gFIA=='); // Basit GX sesi
+            audio.play();
+        }
+    </script>
+</body>
+</html>
